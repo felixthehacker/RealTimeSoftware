@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitor en Tiempo Real - AVE CO1</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-satellite-dish"></i> Monitor en Tiempo Real - AVE CO1</h1>
+            <div class="status-bar" id="statusBar">
+                <span class="status status-stopped">
+                    <i class="fas fa-circle"></i> MONITOREO DETENIDO
+                </span>
+                <span class="table-info" id="tableInfo"></span>
+                <span class="timezone-info" id="timezoneInfo">Zona: America/Caracas (UTC-4:30)</span>
+            </div>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-button active" data-tab="tiempo-real">Monitoreo Tiempo Real</button>
+            <button class="tab-button" data-tab="busqueda-manual">Búsqueda Manual</button>
+            <button id="btnInfoZonaHoraria" class="tab-button btn-info">
+                <i class="fas fa-info-circle"></i> Info Zona Horaria
+            </button>
+        </div>
+
+        <!-- Pestaña Tiempo Real -->
+        <div id="tiempo-real" class="tab-content active">
+            <div class="control-panel">
+                <button id="btnIniciar" class="btn btn-primary">
+                    <i class="fas fa-play"></i> Iniciar Monitoreo
+                </button>
+                <button id="btnActualizarPozo" class="btn btn-secondary">
+                    <i class="fas fa-sync"></i> Actualizar Datos Pozo
+                </button>
+                
+                <div class="delay-control">
+                    <label>Retraso:</label>
+                    <input type="number" id="spinRetraso" min="1" max="60" value="5">
+                    <span>segundos</span>
+                    <button id="btnAplicarRetraso" class="btn btn-outline">Aplicar</button>
+                </div>
+
+                <button id="btnLimpiar" class="btn btn-warning">
+                    <i class="fas fa-broom"></i> Limpiar Registro
+                </button>
+            </div>
+
+            <div class="sync-info" id="syncInfo"></div>
+
+            <div class="data-panel">
+                <h3><i class="fas fa-wave-square"></i> Registros en Tiempo Real</h3>
+                <div class="data-container">
+                    <pre id="textResultados" class="data-output"></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pestaña Búsqueda Manual -->
+        <div id="busqueda-manual" class="tab-content">
+            <div class="search-panel">
+                <div class="search-controls">
+                    <label>Hora a buscar (HH:MM:SS):</label>
+                    <input type="text" id="entryHoraManual" placeholder="00:00:00" value="">
+                    <button id="btnBuscarManual" class="btn btn-primary">
+                        <i class="fas fa-search"></i> Buscar
+                    </button>
+                    <button id="btnGuardarManual" class="btn btn-success">
+                        <i class="fas fa-save"></i> Guardar Manualmente
+                    </button>
+                </div>
+            </div>
+
+            <div class="data-panel">
+                <h3><i class="fas fa-search"></i> Resultados de Búsqueda</h3>
+                <div class="data-container">
+                    <pre id="textManual" class="data-output"></pre>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div class="connection-status">
+                <span class="conn-text connected">Conectado</span>
+                <span id="totalGuardados">Registros guardados: 0</span>
+                <span id="ultimaActualizacion">Última actualización: --:--:--</span>
+            </div>
+        </footer>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
